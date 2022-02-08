@@ -36,6 +36,7 @@ int cntDistinct(string str)
 int superFunctionalStrings(string s) {
     int n = s.size();
     int res = 0;
+    vector<string> sub_strs;
     // Pick starting point
     for (int len = 1; len <= n; len++)
     {   
@@ -45,11 +46,12 @@ int superFunctionalStrings(string s) {
             //  Print characters from current
             // starting point to current ending
             // point. 
-            int j = i + len - 1; 
-            string sub = s.substr(i, len);          
-            res += (int)pow(sub.size(), cntDistinct(sub)) % 1000000007;
-             
-            cout << endl;
+            string sub = s.substr(i, len); 
+            if(!(std::find(sub_strs.begin(), sub_strs.end(), sub) != sub_strs.end())) {
+               /* sub_strs does not contain sub */
+                sub_strs.push_back(sub);
+                res += (int)pow(sub.size(), cntDistinct(sub)) % 1000000007;
+            }            
         }
     }
     return res% 1000000007;
