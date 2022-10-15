@@ -14,6 +14,26 @@ string rtrim(const string &);
  * The function accepts STRING s as parameter.
  */
 
+int CountUniqueCharacters(string str){
+    int count = 0;
+
+    for (int i = 0; i < str.size(); i++){
+         bool appears = false;
+         for (int j = 0; j < i; j++){
+              if (str[j] == str[i]){
+                  appears = true;
+                  break;
+              }
+         }
+
+         if (!appears){
+             count++;
+         }
+    }
+
+    return count;
+}
+
 // unique characters in a string
 int cntDistinct(string str)
 {
@@ -33,6 +53,25 @@ int cntDistinct(string str)
     return s.size();
 }
 
+int distinct(string s){
+    vector<char> chars;
+
+    for (int i = 0; i < s.size(); i++) {
+        if(!(std::find(chars.begin(), chars.end(), s[i]) != chars.end())) {
+               /* sub_strs does not contain sub */
+                chars.push_back(s[i]);
+        }
+    }   
+
+    return chars.size();
+}
+
+void afficheVector(vector<string> sub_strs){
+     // Using a for loop with iterator
+    for(vector<string>::iterator it = begin(sub_strs); it != end(sub_strs); ++it) {
+        cout << *it << "\n";
+    }
+}
 int superFunctionalStrings(string s) {
     int n = s.size();
     int res = 0;
@@ -50,11 +89,16 @@ int superFunctionalStrings(string s) {
             if(!(std::find(sub_strs.begin(), sub_strs.end(), sub) != sub_strs.end())) {
                /* sub_strs does not contain sub */
                 sub_strs.push_back(sub);
-                res += (int)pow(sub.size(), cntDistinct(sub)) % 1000000007;
+                res += ((int)pow(sub.size(), CountUniqueCharacters(sub))) % 1000000007;
             }            
         }
     }
-    return res% 1000000007;
+    /*sort(sub_strs.begin(), sub_strs.end(), []
+    (const string& first, const string& second){
+        return first.size() < second.size();
+    });
+    afficheVector(sub_strs); */
+    return (res % 1000000007);
 }
 
 int main()
